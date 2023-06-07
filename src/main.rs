@@ -1,9 +1,6 @@
-mod toml_banner;
-mod banner_rng;
-pub mod banner;
 use std::collections::HashMap;
 
-use banner::Banner;
+use prts::Banner;
 
 fn main() {
     let mut banner = Banner::from_file("./data/operators.toml".to_string());

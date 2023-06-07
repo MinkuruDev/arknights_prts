@@ -31,7 +31,7 @@ impl Banner {
     /// 
     /// # Example
     /// ```
-    /// use prts::banner::{Banner, BannerType};
+    /// use prts::{Banner, BannerType};
     /// 
     /// let mut banner = Banner::from_banner_type(BannerType::Limited);
     /// ```
@@ -68,7 +68,7 @@ impl Banner {
     /// 
     /// # Example
     /// ```
-    /// use prts::banner::Banner;
+    /// use prts::Banner;
     /// 
     /// let mut banner = Banner::from_file("./data/operators.toml".to_string());
     /// let (star, opname, is_up) = banner.gacha_operator();
@@ -84,7 +84,7 @@ impl Banner {
     /// 
     /// # Example
     /// ```
-    /// use prts::banner::{Banner, BannerType};
+    /// use prts::{Banner, BannerType};
     /// 
     /// let mut banner = Banner::from_banner_type(BannerType::Standard);
     /// // set pool 6 star have 2 operators 
@@ -112,7 +112,7 @@ impl Banner {
     /// 
     /// # Example
     /// ```
-    /// use prts::banner::{Banner, BannerType};
+    /// use prts::{Banner, BannerType};
     /// 
     /// let mut banner = Banner::from_banner_type(BannerType::Standard);
     /// // set pool 6 star have 2 operators 
@@ -145,7 +145,7 @@ impl Banner {
     /// - 50% to get 4 star operator
     /// - 40% to get 3 star operator <br/>
     /// In the first 10 headhunt in a banner, if you don't get a 5 star or higher star operator
-    /// the 10th headhunt guranteed a 5 star operator <br/>
+    /// the 10th headhunt guaranteed a 5 star operator <br/>
     /// If for 50 headhunt, you don't get a 6 star operator, from the 51st headhunt will increase change 
     /// to get six star operator by 2% (change to get 6 star operator in the 51st headhunt is 4%, 
     /// 52nd is 6%, ...) <br/>
@@ -161,12 +161,15 @@ impl Banner {
     /// 
     /// # Example
     /// ```
-    /// use prts::banner::Banner;
+    /// use prts::Banner;
     /// 
     /// let mut banner = Banner::from_file("./data/operators.toml".to_string());
     /// let (star, opname, is_up) = banner.gacha_operator();
     /// println!("{} {} {}", is_up, star, opname);
     /// ```
+    /// 
+    /// # Panics
+    /// May Panik if operator pool and operator rate up is not set
     /// 
     pub fn gacha_operator(&mut self) -> (u8, String, bool) {
         let (star_result, is_up) = self.rarity.it_gacha_time();
@@ -185,7 +188,7 @@ impl Banner {
     /// 
     /// # Example
     /// ```
-    /// use prts::banner::Banner;
+    /// use prts::Banner;
     /// 
     /// let mut banner = Banner::from_file("./data/operators.toml".to_string());
     /// let res = banner.gacha_10_times();
@@ -193,6 +196,9 @@ impl Banner {
     ///     println!("{} {} {}", is_up, star, name);
     /// }
     /// ```
+    /// 
+    /// # Panics
+    /// May Panik if operator pool and operator rate up is not set
     pub fn gacha_10_times(&mut self) -> Vec<(u8, String, bool)> {
         let mut res = Vec::new();
         for _ in 0..10 {
