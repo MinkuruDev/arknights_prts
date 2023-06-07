@@ -5,11 +5,11 @@ use super::toml_banner::TomlBanner;
 use super::banner_rng::Rarity;
 
 #[derive(Debug)]
-pub(super) struct Banner{
-    pub(crate) pool: HashMap<u8, Vec<String>>,
-    pub(crate) rate_up: HashMap<u8, Vec<String>>,
-    pub(crate) rarity: Rarity,
-    pub(crate) banner_type: BannerType
+pub struct Banner{
+    pub(super) pool: HashMap<u8, Vec<String>>,
+    pub(super) rate_up: HashMap<u8, Vec<String>>,
+    pub(super) rarity: Rarity,
+    pub(super) banner_type: BannerType
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Copy)]
@@ -20,7 +20,7 @@ pub(crate) enum BannerType {
 
 #[allow(dead_code)]
 impl Banner {
-    pub fn from_banner_type(banner_type: BannerType) -> Self{
+    pub(crate) fn from_banner_type(banner_type: BannerType) -> Self{
         Self {
             pool: HashMap::new(),
             rate_up: HashMap::new(),
