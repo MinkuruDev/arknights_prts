@@ -1,0 +1,12 @@
+[package]
+name = "prts"
+version = "0.1.0"
+edition = "2021"
+license = "MPL2"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+rand = "0.8.5"
+toml = "0.7.4"
+serde = { version = "1.0.163", features = ["derive"] }

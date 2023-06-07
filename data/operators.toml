@@ -1,0 +1,31 @@
+banner_type = "Limited"
+
+[pool]
+6 = [
+    "Exusiai", 
+    "Kal'tsit"
+]
+5 = [
+    "Pramanix",
+    "Elysium",
+    "Ptilopsis"
+]
+4 = [
+    "Vigna", 
+    "Perfumer",
+    "Jessica"
+]
+3 = [
+    "Kross", 
+    "Beagle",
+    "Lava"
+]
+
+[rate_up]
+6 = [
+    "Texas the Omertosa",
+    "Penance"
+]
+5 = [
+    "LunaCub",
+]
