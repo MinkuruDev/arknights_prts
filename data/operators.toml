@@ -1,3 +1,4 @@
+# banner_type can be "Limited" or "Standard"
 banner_type = "Limited"
 
 [pool]
