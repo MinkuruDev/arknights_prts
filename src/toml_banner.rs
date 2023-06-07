@@ -1,9 +1,8 @@
 use std::{collections::HashMap};
 use serde::{Serialize, Deserialize};
 use toml;
-use crate::banner::BannerType;
+use crate::banner::{BannerType, Banner};
 
-use super::Banner;
 use std::fs::File;
 use std::io::prelude::*;
 use std::path::Path;
