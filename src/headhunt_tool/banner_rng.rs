@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use rand::{rngs::ThreadRng, thread_rng, Rng};
 
-use crate::banner::BannerType;
+use crate::BannerType;
 
 #[derive(Debug)]
 pub(crate) struct Rarity{

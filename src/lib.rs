@@ -1,6 +1,4 @@
-pub mod banner;
-mod toml_banner;
-mod banner_rng;
+pub mod headhunt_tool;
 
-pub use self::banner::Banner;
-pub use self::banner::BannerType;
+pub use crate::headhunt_tool::banner::Banner;
+pub use crate::headhunt_tool::banner::BannerType;
