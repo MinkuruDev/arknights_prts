@@ -1,5 +1,5 @@
 # PRTS
-![PRTS](https://static.wikia.nocookie.net/mrfz/images/6/6e/PRTS.png/revision/latest)
+![PRTS](./data/PRTS.png)
 
 A Rust library for simulate PRTS in game Arknights
 
