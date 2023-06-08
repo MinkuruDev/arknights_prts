@@ -1,11 +1,12 @@
 [package]
 name = "prts"
-version = "0.2.1"
+version = "0.2.2"
 edition = "2021"
 license = "MPL-2.0"
 description = "A Rust library for simulate PRTS in game Arknights"
 repository = "https://github.com/MinkuruDev/arknights_prts"
 keywords = ["gacha", "simulate"]
+include = ["src/", "LICENSE.*", "README.md"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
