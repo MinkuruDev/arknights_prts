@@ -1,14 +1,14 @@
 use std::collections::HashMap;
-use rand::Rng;
+use rand::{Rng, thread_rng};
 use serde::{Serialize, Deserialize};
 use super::toml_banner::TomlBanner;
 use super::banner_rng::Rarity;
 
 #[derive(Debug)]
 pub struct Banner{
-    pub(super) pool: HashMap<u8, Vec<String>>,
-    pub(super) rate_up: HashMap<u8, Vec<String>>,
-    pub(super) rarity: Rarity,
+    pub pool: HashMap<u8, Vec<String>>,
+    pub rate_up: HashMap<u8, Vec<String>>,
+    pub rarity: Rarity,
     pub(super) banner_type: BannerType
 }
 
@@ -90,7 +90,7 @@ impl Banner {
     /// // set pool 6 star have 2 operators 
     /// banner.set_pool(6, vec!["Silver Ash".to_string(), "Angelina".to_string()]);
     /// // set pool 5 star have 2 operators 
-    /// banner.set_pool(5, vec!["Andreana".to_string(), "Projeck Red".to_string()]);
+    /// banner.set_pool(5, vec!["Andreana".to_string(), "Projekt Red".to_string()]);
     /// // set pool 4 star have 2 operators 
     /// banner.set_pool(4, vec!["Utage".to_string(), "Myrtle".to_string()]);
     /// // set pool 3 star have 2 operators 
@@ -99,7 +99,7 @@ impl Banner {
     /// // set rate up 6 star have 2 operator
     /// banner.set_rate_up(6, vec!["Surtr".to_string(), "Skadi".to_string()]);
     /// // set rate up 5 star have 3 operator
-    /// banner.set_rate_up(6, vec!["Specter".to_string(), "Ptilopsis".to_string(), "Lappland".to_string()]);
+    /// banner.set_rate_up(5, vec!["Specter".to_string(), "Ptilopsis".to_string(), "Lappland".to_string()]);
     /// 
     /// let (star, opname, is_up) = banner.gacha_operator();
     /// println!("{} {} {}", is_up, star, opname);
@@ -118,7 +118,7 @@ impl Banner {
     /// // set pool 6 star have 2 operators 
     /// banner.set_pool(6, vec!["Silver Ash".to_string(), "Angelina".to_string()]);
     /// // set pool 5 star have 2 operators 
-    /// banner.set_pool(5, vec!["Andreana".to_string(), "Projeck Red".to_string()]);
+    /// banner.set_pool(5, vec!["Andreana".to_string(), "Projekt Red".to_string()]);
     /// // set pool 4 star have 2 operators 
     /// banner.set_pool(4, vec!["Utage".to_string(), "Myrtle".to_string()]);
     /// // set pool 3 star have 2 operators 
@@ -127,7 +127,7 @@ impl Banner {
     /// // set rate up 6 star have 2 operator
     /// banner.set_rate_up(6, vec!["Surtr".to_string(), "Skadi".to_string()]);
     /// // set rate up 5 star have 3 operator
-    /// banner.set_rate_up(6, vec!["Specter".to_string(), "Ptilopsis".to_string(), "Lappland".to_string()]);
+    /// banner.set_rate_up(5, vec!["Specter".to_string(), "Ptilopsis".to_string(), "Lappland".to_string()]);
     /// 
     /// let (star, opname, is_up) = banner.gacha_operator();
     /// println!("{} {} {}", is_up, star, opname);
@@ -169,7 +169,7 @@ impl Banner {
     /// ```
     /// 
     /// # Panics
-    /// May Panik if operator pool and operator rate up is not set
+    /// May Panik if operator pool or operator rate up is not set
     /// 
     pub fn gacha_operator(&mut self) -> (u8, String, bool) {
         let (star_result, is_up) = self.rarity.it_gacha_time();
@@ -178,7 +178,7 @@ impl Banner {
             else {self.pool.get(&star_result).unwrap()};
         (
             star_result,
-            operators.get(self.rarity.rng.gen_range(0..operators.len()))
+            operators.get(thread_rng().gen_range(0..operators.len()))
                         .unwrap().to_owned(),
             is_up
         )
@@ -198,12 +198,36 @@ impl Banner {
     /// ```
     /// 
     /// # Panics
-    /// May Panik if operator pool and operator rate up is not set
+    /// May Panik if operator pool or operator rate up is not set
     pub fn gacha_10_times(&mut self) -> Vec<(u8, String, bool)> {
         let mut res = Vec::new();
         for _ in 0..10 {
             res.push(self.gacha_operator());
         }
         res
+    }
+
+    /// set `non_six_star_count` and `guarantee_five_star` of `Banner`
+    /// can be useful when have many doctor, but need to create only 1 banner
+    /// 
+    /// # Example
+    /// ```
+    /// use prts::Banner;
+    /// 
+    /// let mut banner = Banner::from_file("./data/operators.toml".to_string());
+    /// let res = banner.gacha_10_times();
+    /// for (star, name, is_up) in &res {
+    ///     println!("{} {} {}", is_up, star, name);
+    /// }
+    /// let old_dokutah_infor = (banner.rarity.non_six_star_count, banner.rarity.guarantee_five_star);
+    /// banner.set_dokutah_info(90, 0);
+    /// let res = banner.gacha_10_times();
+    /// for (star, name, is_up) in &res {
+    ///     println!("{} {} {}", is_up, star, name);
+    /// }
+    /// ```
+    pub fn set_dokutah_info(&mut self, non_six_star_count: u8, guarantee_five_star: i8) {
+        self.rarity.non_six_star_count = non_six_star_count;
+        self.rarity.guarantee_five_star = guarantee_five_star;
     }
 }
